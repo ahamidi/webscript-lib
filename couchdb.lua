@@ -7,7 +7,7 @@ local auth = {storage.db_key, storage.db_password}
 local get = function(path, params)
 
 	return http.request {
-		url = storage.db_url..storage.db_name..path,
+		url = storage.db_url..storage.db_name.."/"..path,
 		method = "GET",
 		headers = headers,
 		auth = auth,
