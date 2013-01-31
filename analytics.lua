@@ -39,4 +39,11 @@ local function track(event)
 	lease.release(event)
 end
 
-return {track=track, init=init}
+local function upload()
+	-- TODO:
+	-- * Upload events count to DB
+	-- * Reset events count
+	print("DB URL")
+end
+
+return {track=track, init=init, upload=upload}
