@@ -32,7 +32,8 @@ end
 local function track(event)
 	lease.acquire(event)
 	if (storage[event]) then
-		local num = json.parse(storage[event].count)
+		print("Event Stats String: "..storage[event])
+		local num = json.parse(storage[event]).count
 		storage[event] = json.stringify({type="event", name=event, count=(num + 1)})
 	else
 		storage[event] = json.stringify({type="event", name=event, count=1})
@@ -40,7 +41,7 @@ local function track(event)
 	lease.release(event)
 end
 
-local function upload(stored)
+local function upload()
 	-- TODO:
 	-- * Upload events count to DB
 	-- * Reset events count
@@ -52,9 +53,9 @@ local function upload(stored)
 	local cur_time = os.time()
 
 	-- Iterate over all stats records in storage and add to docs
-	for i=1, #stored do
-		if (json.parse(stored[i]).type == "event") then
-			local event = json.parse(stored[i])
+	for i=1, #storage do
+		if (json.parse(storage[i]).type == "event") then
+			local event = json.parse(storage[i])
 			table.insert(docs, {
 				event=event.name,
 				time=cur_time,
@@ -67,7 +68,7 @@ local function upload(stored)
 
 	-- Unpack stats config string
 	local url, key, password
-	local stats = json.parse(stored.stats)
+	local stats = json.parse(storage.stats)
 
 	local response = http.request {
 		url = stats.url.."/_bulk_docs",
