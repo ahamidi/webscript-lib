@@ -43,7 +43,7 @@ local function upload()
 	-- TODO:
 	-- * Upload events count to DB
 	-- * Reset events count
-	print("DB URL")
+	print("DB URL: "..url)
 end
 
 return {track=track, init=init, upload=upload}
