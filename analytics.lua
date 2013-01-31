@@ -29,14 +29,14 @@ local function init(url, key, password)
 
 end
 
-local function track(path)
-	lease.acquire(path)
-	if (storage[path]) then
-		storage[path] = storage[path] + 1
+local function track(event)
+	lease.acquire(event)
+	if (storage[event]) then
+		storage[event] = storage[event] + 1
 	else
-		storage[path] = 1
+		storage[event] = 1
 	end
-	lease.release(path)
+	lease.release(event)
 end
 
 return {track=track, init=init}
