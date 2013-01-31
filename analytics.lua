@@ -39,3 +39,5 @@ local function track()
 	end
 	lease.release(path)
 end
+
+return {track=track, init=init}
