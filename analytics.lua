@@ -52,6 +52,7 @@ local function upload(storage)
 	local cur_time = os.time()
 
 	-- Iterate over all stats records in storage and add to params
+	print("Storage: "..storage)
 	for i=1, #storage do
 		if (json.parse(storage[i]).type == "event") then
 			local event = json.parse(storage[i])
