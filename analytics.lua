@@ -40,7 +40,7 @@ local function track(event)
 	lease.release(event)
 end
 
-local function upload()
+local function upload(storage)
 	-- TODO:
 	-- * Upload events count to DB
 	-- * Reset events count
