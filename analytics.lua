@@ -21,10 +21,11 @@
 local headers = {["Content-Type"]="application/json"}
 
 local function init(url, key, password)
-
-	storage.stats_url = url
-	storage.stats_key = key
-	storage.stats_password = password
+	if (storage.stats) then
+		-- Already initialized
+	else
+		storage.stats = json.stringify({url=url, key=key, password=password})
+	end
 
 end
 
@@ -64,11 +65,15 @@ local function upload()
 		end
 	end
 
+	-- Unpack stats config string
+	local url, key, password
+	local stats = json.parse(storage.stats)
+
 	local response = http.request {
-		url = storage.stats_url.."/_bulk_docs",
+		url = stats.url.."/_bulk_docs",
 		method = "POST",
 		headers = {["Content-Type"]="application/json"},
-		auth = {storage.stats_key,storage.stats_password},
+		auth = {stats.key,stats.password},
 		data = data
 	}
 
