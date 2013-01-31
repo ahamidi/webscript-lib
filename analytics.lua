@@ -52,7 +52,7 @@ local function upload()
 
 	-- Iterate over all stats records in storage and add to params
 	for i=1, #storage do
-		if (json.parse(storage[i]).type == "event") do
+		if (json.parse(storage[i]).type == "event") then
 			local event = json.parse(storage[i])
 			table.insert(docs, {
 				event=event.name,
