@@ -22,15 +22,14 @@ local headers = {["Content-Type"]="application/json"}
 local url = ""
 local auth = {}
 
-function init(url, key, password)
+local function init(url, key, password)
 
 	url = url
 	auth = {key, password}
 
 end
 
-function track()
-	local path = request.path
+local function track(path)
 	lease.acquire(path)
 	if (storage[path]) then
 		storage[path] = storage[path] + 1
