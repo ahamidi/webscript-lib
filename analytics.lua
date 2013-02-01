@@ -72,7 +72,7 @@ local function upload()
 	local cur_time = os.time()
 
 	-- Iterate over all stats records in storage and add to docs
-	local events = json.parse(storage.stats).events
+	local events = json.parse(storage.events_list)
 
 	for i=1, #events do
 		local event = json.parse(storage[events[i]])
