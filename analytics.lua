@@ -16,6 +16,10 @@
 --		* Require analytics.lua - local stats = require ('ahamidi/webscript-lib/analytics.lua')
 --		* call stat.upload()
 --		* Setup Cron Job to call above script every 5 minutes
+--
+--
+--	!WARNING! This script will create a number of keys in persistent storage.
+--
 
 -- Setup
 local headers = {["Content-Type"]="application/json"}
@@ -32,7 +36,6 @@ end
 local function track(event)
 	lease.acquire(event)
 	if (storage[event]) then
-		print("Event Stats String: "..storage[event])
 		local num = json.parse(storage[event]).count
 		storage[event] = json.stringify({type="event", name=event, count=(num + 1)})
 	else
@@ -40,16 +43,16 @@ local function track(event)
 
 		-- This is a new event, so we need to add it to the events list
 		lease.acquire("events_list")
-		local stats = json.parse(storage.stats)
 
 		-- Need to check if the events list exists
-		if (stats.events) then
-			table.insert(stats.events, event)
+		if (storage.events_list) then
+			events_list = json.parse(storage.events_list)
+			table.insert(events_list, event)
+			storage.events_list = json.stringify(events_list)
 		else
-			stats["events"] = {event}
+			stats.events_list = {event}
 		end
 
-		storage.stats = json.stringify(stats)
 		lease.release("events_list")
 	end
 	lease.release(event)
