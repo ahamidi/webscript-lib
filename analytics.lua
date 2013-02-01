@@ -92,7 +92,7 @@ local function upload()
 		method = "POST",
 		headers = {["Content-Type"]="application/json"},
 		auth = {stats.key,stats.password},
-		data = data
+		data = json.stringify(data)
 	}
 
 end
