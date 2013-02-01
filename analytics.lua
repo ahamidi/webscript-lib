@@ -37,6 +37,20 @@ local function track(event)
 		storage[event] = json.stringify({type="event", name=event, count=(num + 1)})
 	else
 		storage[event] = json.stringify({type="event", name=event, count=1})
+
+		-- This is a new event, so we need to add it to the events list
+		lease.acquire("events_list")
+		local stats = json.parse(storage.stats)
+
+		-- Need to check if the events list exists
+		if (stats.events) then
+			table.insert(stats.events, event)
+		else
+			stats["events"] = {event}
+		end
+
+		storage.stats = json.stringify(stats)
+		lease.release("events_list")
 	end
 	lease.release(event)
 end
@@ -53,19 +67,15 @@ local function upload()
 	local cur_time = os.time()
 
 	-- Iterate over all stats records in storage and add to docs
-	local storage = storage
-	print(storage)
-	for i=1, #storage do
-		if (json.parse(storage[i]).type == "event") then
-			local event = json.parse(storage[i])
-			table.insert(docs, {
-				event=event.name,
-				time=cur_time,
-				count=event.count
-			})
-		else
-			-- Not an event
-		end
+	local events = json.parse(storage.stats).events
+
+	for i=1, #events do
+		local event = json.parse(storage[events[i]])
+		table.insert(docs, {
+			event=event.name,
+			time=cur_time,
+			count=event.count
+		})
 	end
 
 	-- Unpack stats config string
