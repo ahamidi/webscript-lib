@@ -50,7 +50,7 @@ local function track(event)
 			table.insert(events_list, event)
 			storage.events_list = json.stringify(events_list)
 		else
-			stats.events_list = {event}
+			storage.events_list = {event}
 		end
 
 		lease.release("events_list")
