@@ -19,8 +19,8 @@
 --
 --
 
-function ez_count(ezkey, stat_name, count)
-    return response = http.request {
+local function ez_count(ezkey, stat_name, count)
+    local response = http.request {
 		url = "http://api.stathat.com/ez",
 		method = "GET",
 		params = {
@@ -28,11 +28,12 @@ function ez_count(ezkey, stat_name, count)
 			stat = stat_name,
 			count = count
 		}
-	}    
+	}
+	return response
 end
 
-function ez_value(ezkey, stat_name, value)
-	return response = http.request {
+local function ez_value(ezkey, stat_name, value)
+	local response = http.request {
 		url = "http://api.stathat.com/ez",
 		method = "GET",
 		params = {
@@ -41,10 +42,11 @@ function ez_value(ezkey, stat_name, value)
 			value = value
 		}
 	}
+	return response
 end
 
-function count(stat_key, user_key, count)
-    return response = http.request {
+local function count(stat_key, user_key, count)
+    local response = http.request {
 		url = "http://api.stathat.com/c",
 		method = "GET",
 		params = {
@@ -53,11 +55,11 @@ function count(stat_key, user_key, count)
 			count = count
 		}
 	}
+	return response
 end
 
-function value(stat_key, user_key, value)
-    return http.request("http://api.stathat.com/v", "key=" .. stat_key .. "&ukey=" .. user_key .. "&value=" .. value)
-    return response = http.request {
+local function value(stat_key, user_key, value)
+    local response = http.request {
 		url = "http://api.stathat.com/v",
 		method = "GET",
 		params = {
@@ -66,4 +68,7 @@ function value(stat_key, user_key, value)
 			value = value
 		}
 	}
+	return response
 end
+
+return {ez_count=ez_count, ez_value=ez_value, count=count, value=value}
