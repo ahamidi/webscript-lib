@@ -32,7 +32,7 @@ local function webrequest(path, params)
 		url = url,
 		method = "GET",
 		params = params,
-		headers = {['Content-Type'] = 'application/JSON'}
+		headers = {['Content-Type'] = 'application/json'}
 	}
 	
 	return response
