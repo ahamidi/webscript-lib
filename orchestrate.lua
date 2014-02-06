@@ -10,7 +10,7 @@ local function init(apikey)
 	storage.apikey = apikey
 end
 
-local function doRequest(collection, path, params, method)
+local function doRequest(collection, path, params, method, data)
 	-- Core method that actually calls Orchestrate API
 	
 	-- Set correct HTTP Verb
@@ -29,7 +29,8 @@ local function doRequest(collection, path, params, method)
 		method = method,
 		auth = {storage.apikey,""},
 		headers = {['Content-Type'] = "application/json"},
-		params = params
+		params = params,
+		data = data
 	}
 	
 	local result = http.request(httpOptions)
@@ -44,11 +45,11 @@ local function getKey(collection, key)
 	return doRequest(collection, request)
 end
 
-local function setKey(collection, key)
+local function setKey(collection, key, data)
 	-- Construct Request
 	local request = key
 	
-	return doRequest(collection, request, nil, "PUT")
+	return doRequest(collection, request, nil, "PUT", data)
 end
 
 local function deleteKey(collection, key)
