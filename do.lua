@@ -42,6 +42,8 @@ end
 -- Public calls
 
 local function init(client_id, api_key)
+	storage.client_id = nil
+	storage.api_key = nil
 	storage.client_id = client_id
 	storage.api_key = api_key
 
