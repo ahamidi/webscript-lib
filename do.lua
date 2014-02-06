@@ -24,8 +24,8 @@ local function webrequest(path, params)
 	end
 	
 	-- Inject client ID and api key
-	params["client_id"] = client_id
-	params["api_key"] = api_key
+	params["client_id"] = storage.do_client_id
+	params["api_key"] = storage.do_api_key
 	
 	-- Make the call
 	local response = http.request {
@@ -40,10 +40,8 @@ end
 -- Public calls
 
 local function init(client_id, api_key)
-	storage.client_id = nil
-	storage.api_key = nil
-	storage.client_id = client_id
-	storage.api_key = api_key
+	storage.do_client_id = client_id
+	storage.do_api_key = api_key
 
 	return true
 end
