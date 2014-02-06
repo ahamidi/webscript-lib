@@ -1,4 +1,9 @@
--- IBT VPS Server Management Script
+------------------------------------------------------------------------------
+-- Digital Ocean API Lib
+--
+-- Author: Ali Hamidi
+-- Date: Feb 06, 2014
+--
 
 -- Private Functions
 
