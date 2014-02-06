@@ -34,7 +34,7 @@ local function doRequest(collection, path, params, method)
 	
 	local result = http.request(httpOptions)
 	
-	return result.statuscode, result.content
+	return result
 end
 
 local function getKey(collection, key)
