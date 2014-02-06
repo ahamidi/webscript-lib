@@ -30,7 +30,7 @@ local function webrequest(path, params)
 	-- Make the call
 	local response = http.request {
 		url = url,
-		method = "GET",
+		method = "POST",
 		params = params,
 		headers = {['Content-Type'] = 'application/json', ['Accept-Language'] = 'en-US,en'}
 	}
