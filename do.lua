@@ -24,8 +24,6 @@ local function webrequest(path, params)
 	end
 	
 	-- Inject client ID and api key
-	local client_id = storage.do_client_id
-	local api_key = storage.do_api_key
 	params["client_id"] = client_id
 	params["api_key"] = api_key
 	
