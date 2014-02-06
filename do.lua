@@ -31,7 +31,8 @@ local function webrequest(path, params)
 	local response = http.request {
 		url = url,
 		method = "GET",
-		params = params
+		params = params,
+		headers = {['Content-Type'] = 'application/JSON'}
 	}
 	
 	return response
