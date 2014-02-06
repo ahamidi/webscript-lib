@@ -67,8 +67,8 @@ local function newServer(name, size, image, region)
 	local path = "droplets/new"
 	local params = {
 		name = name,
-		size_id = size
-		image_id = image
+		size_id = size,
+		image_id = image,
 		region = region
 	}
 
